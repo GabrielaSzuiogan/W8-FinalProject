@@ -1,0 +1,63 @@
+header {
+  padding: 1rem;
+  border-bottom: 2px solid #ccc;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header-title {
+  text-decoration: none;
+  color: inherit;
+}
+
+.header-title h2 {
+  margin: 0;
+}
+
+.header-navigation {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.header-more-opt {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.quote-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  cursor: pointer;
+  color: inherit;
+}
+
+.theme-button {
+  background: none;
+  border: "none";
+  cursor: pointer;
+  color: inherit;
+}
+
+.header-menu-wrp {
+  position: relative;
+}
+
+.menu-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+}
