@@ -9,7 +9,7 @@ export default function Layout() {
   return (
     <div data-theme={theme} style={{ minHeight: "100vh" }}>
       <Header />
-      <main className="main-wrpp">
+      <main className="main-wrp">
         <Outlet />
       </main>
     </div>
