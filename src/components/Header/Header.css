@@ -1,6 +1,10 @@
 header {
-  padding: 1rem;
-  border-bottom: 2px solid #ccc;
+  padding: 1rem 2rem;
+  background-color: var(--header-bg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
 .header-content {
@@ -11,16 +15,20 @@ header {
 
 .header-title {
   text-decoration: none;
-  color: inherit;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .header-title h2 {
   margin: 0;
+  font-size: 1.5rem;
 }
 
 .header-navigation {
   display: flex;
-  gap: 1rem;
+  gap: 0.5rem;
   align-items: center;
 }
 
@@ -29,7 +37,7 @@ header {
   gap: 1rem;
   align-items: center;
 }
-
+/* 
 .quote-button {
   display: flex;
   align-items: center;
@@ -40,14 +48,14 @@ header {
   padding: 0.3rem 0.8rem;
   cursor: pointer;
   color: inherit;
-}
+} */
 
-.theme-button {
+/* .theme-button {
   background: none;
   border: "none";
   cursor: pointer;
   color: inherit;
-}
+} */
 
 .header-menu-wrp {
   position: relative;

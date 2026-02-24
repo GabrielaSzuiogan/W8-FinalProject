@@ -1,0 +1,75 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@700&display=swap");
+
+/* Sunlight / Light Mode */
+:root {
+  --bg-color: #fdf8eb;
+  --header-bg: #e0f8e5;
+  --text-main: #1f5e30;
+  --text-heading: #4a331c;
+  --text-muted: #78716c;
+  --accent-bg: #fce196;
+  --accent-text: #664218;
+  --divider-color: #c1dbca;
+  --btn-primary: #e39c40;
+  --btn-hover: #cc8b38;
+  --card-bg: #ffffff;
+  --card-border: #f5e5b8;
+}
+
+/* Starlight Dark Mode */
+[data-theme="Starlight"] {
+  --bg-color: #0b1120;
+  --header-bg: #0b1120;
+  --text-main: #f1f5f9;
+  --text-heading: #ffffff;
+  --text-muted: #94a3b8;
+  --accent-bg: #3730a3;
+  --accent-text: #ffffff;
+  --divider-color: #1e293b;
+  --btn-primary: #8b5cf6;
+  --btn-hover: #7c3aed;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+}
+
+body {
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Merriweather", serif;
+  color: var(--text-heading);
+  margin-top: 0;
+}
+
+.main-wrpp {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  border-radius: 8px;
+  transition: background-color 0.2s;
+}
+
+.icon-btn:hover {
+  background-color: rgba(120, 120, 120, 0.1);
+}

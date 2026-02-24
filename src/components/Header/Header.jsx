@@ -15,12 +15,20 @@ export default function Header() {
           <Link to="/contact">Contact</Link>
         </nav>
 
+        <div
+          style={{
+            width: "1px",
+            height: "24px",
+            backgroundColor: "var(--divider-color)",
+          }}
+        ></div>
+
         <div className="header-more-opt">
-          <button className="quote-button">
+          <button className="icon-btn">
             <Sparkles size={16} /> Oracle
           </button>
 
-          <button className="theme-button">
+          <button className="icon-btn">
             <Sun size={20} />
           </button>
 
