@@ -14,6 +14,11 @@
   --btn-hover: #cc8b38;
   --card-bg: #ffffff;
   --card-border: #f5e5b8;
+
+  --h1-size: 2rem;
+  --p-size: 1rem;
+  --card-padding: 1.5rem;
+  --header-padding: 1rem;
 }
 
 /* Starlight Dark Mode */
@@ -32,11 +37,32 @@
   --card-border: #374151;
 }
 
+.desktop-only {
+  display: none !important;
+}
+.mobile-only {
+  display: block !important;
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --h1-size: 3.5rem;
+    --p-size: 1.2rem;
+    --card-padding: 3rem;
+    --header-padding: 1rem 2rem;
+  }
+
+  .desktop-only {
+    display: flex !important;
+  }
+  .mobile-only {
+    display: none !important;
+  }
+}
+
 body {
   margin: 0;
   font-family: "Inter", sans-serif;
-  background-color: var(--bg-color);
-  color: var(--text-main);
   transition:
     background-color 0.3s ease,
     color 0.3s ease;
@@ -51,10 +77,20 @@ h4 {
   margin-top: 0;
 }
 
+.app-container {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease;
+}
+
 .main-wrp {
   padding: 2rem;
   max-width: 1200px;
   margin: 0 auto;
+  background-color: --var(--bg-color);
 }
 
 .icon-btn {
@@ -92,4 +128,38 @@ h4 {
 
 .btn-primary:hover {
   background-color: var(--btn-hover);
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-main);
+  font-weight: 600;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  transition: all 0.2s;
+}
+
+.nav-link:hover {
+  background-color: rgba(120, 120, 120, 0.1);
+}
+
+.nav-link.active {
+  background-color: var(--accent-bg);
+  color: var(--accent-text);
+}
+
+.card {
+  background-color: var(--card-bg);
+  border: 2px solid var(--card-border);
+  border-radius: 24px;
+  padding: var(--card-padding);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.short-divider {
+  width: 1px;
+  height: 24px;
+  background-color: var(--divider-color);
 }

@@ -10,13 +10,13 @@
 }
 
 .main-title {
-  font-size: 3rem;
+  font-size: var(--h1-size);
   line-height: 1.2;
   margin-bottom: 1rem;
 }
 
 .main-descr {
-  font-size: 1.2rem;
+  font-size: var(--p-size);
   line-height: 1.6;
   color: var(--text-main);
   margin-bottom: 2.5rem;
