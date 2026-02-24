@@ -1,13 +1,52 @@
 import {
   Bird,
   Birdhouse,
+  Feather,
   Flower,
   ScrollText,
   Send,
   Sparkle,
 } from "lucide-react";
 import "./ContactPage.css";
+import { updateContactDraft } from "../store/uiSlice";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 export default function ContactPage() {
+  const dispatch = useDispatch();
+  const savedDraft = useSelector((state) => state.ui.contactDraft);
+
+  const [status, setStatus] = useState("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    tome: savedDraft || "",
+    message: savedDraft || "",
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    if (name === "message") {
+      dispatch(updateContactDraft(value));
+    }
+
+    if (name === "tome") {
+      dispatch(updateContactDraft(value));
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setStatus("sending");
+
+    setTimeout(() => {
+      setStatus("success");
+      setFormData({ name: "", email: "", tome: "", message: "" });
+      dispatch(updateContactDraft(""));
+    }, 1500);
+  };
   return (
     <div className="contact-wrp">
       <div className="card contact-card">
@@ -22,68 +61,104 @@ export default function ContactPage() {
             shall unfold your parchment the moment it flutters in.
           </p>
         </div>
-        <form>
-          <div className="form-group">
-            <label className="form-label">
-              <Flower size={20} />
-              Sprite Name
-            </label>
-            <input
-              type="text"
-              name="name"
-              className="form-input"
-              placeholder="e.g. Sparkle Leaf"
-            />
-          </div>
 
-          <div className="form-group">
-            <label className="form-label">
-              <Birdhouse size={20} />
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              className="form-input"
-              placeholder="sparkle@mushroom.com"
-            />
+        {status === "success" ? (
+          <div className="success-message">
+            <h3>Pigeon Released! </h3>
+            <p>A Librarian will review your request shortly.</p>
+            <button
+              className="btn-primary"
+              onClick={() => setStatus("idle")}
+              style={{ marginTop: "1rem" }}
+            >
+              Send Another
+            </button>
           </div>
+        ) : (
+          <form onSubmit={handleSubmit}>
+            <div className="form-group">
+              <label className="form-label">
+                <Flower size={20} color="pink" />
+                Sprite Name
+              </label>
+              <input
+                type="text"
+                name="name"
+                className="form-input"
+                placeholder="e.g. Sparkle Leaf"
+                value={formData.name}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label className="form-label">
-              <ScrollText size={20} />
-              Tome Requested
-            </label>
-            <input
-              type="text"
-              name="tome"
-              className="form-input"
-              placeholder="Title and Author of the book"
-            />
-          </div>
+            <div className="form-group">
+              <label className="form-label">
+                <Birdhouse size={20} color="SaddleBrown" />
+                Email
+              </label>
+              <input
+                type="email"
+                name="email"
+                className="form-input"
+                placeholder="sparkle@mushroom.com"
+                value={formData.email}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <div className="form-group">
-            <label className="form-label">
-              <Sparkle size={20} />
-              Additional Message
-            </label>
-            <textarea
-              name="message"
-              className="form-input"
-              placeholder="I am curious about..."
-            />
-            <small className="draft-notice">Draft saved...</small>
-          </div>
+            <div className="form-group">
+              <label className="form-label">
+                <ScrollText size={20} color="DarkSalmon" />
+                Tome Requested
+              </label>
+              <input
+                type="text"
+                name="tome"
+                className="form-input"
+                placeholder="Title and Author of the book"
+                value={formData.tome}
+                onChange={handleChange}
+                required
+              />
+            </div>
 
-          <button
-            type="submit"
-            className="btn-primary"
-            style={{ width: "100%", justifyContent: "center" }}
-          >
-            {" "}
-            <Send /> Dispatch Pigeon
-          </button>
-        </form>
+            <div className="form-group">
+              <label className="form-label">
+                <Sparkle size={20} color="Goldenrod" />
+                Additional Message
+              </label>
+              <textarea
+                name="message"
+                className="form-input"
+                placeholder="I am curious about..."
+                value={formData.message}
+                onChange={handleChange}
+              />
+              <small className="draft-notice">
+                {savedDraft ? "Draft saved..." : ""}
+              </small>
+            </div>
+
+            <button
+              type="submit"
+              className="btn-primary"
+              style={{ width: "100%", justifyContent: "center" }}
+              disabled={status === "sending"}
+            >
+              {status === "sending" ? (
+                <>
+                  Sending... <Feather className="spin" size={20} />
+                </>
+              ) : (
+                <>
+                  Release Pigeon <Send size={20} />
+                </>
+              )}
+            </button>
+          </form>
+        )}
       </div>
     </div>
   );
