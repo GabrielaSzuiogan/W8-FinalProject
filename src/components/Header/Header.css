@@ -1,10 +1,13 @@
 header {
-  padding: 1rem 2rem;
+  padding: var(--header-padding);
   background-color: var(--header-bg);
   display: flex;
   justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
 }
 
 .header-content {
@@ -26,6 +29,12 @@ header {
   font-size: 1.5rem;
 }
 
+.header-right {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
 .header-navigation {
   display: flex;
   gap: 0.5rem;
@@ -37,35 +46,43 @@ header {
   gap: 1rem;
   align-items: center;
 }
-/* 
-.quote-button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  background: none;
-  border: 1px solid #ccc;
-  border-radius: 20px;
-  padding: 0.3rem 0.8rem;
-  cursor: pointer;
-  color: inherit;
-} */
-
-/* .theme-button {
-  background: none;
-  border: "none";
-  cursor: pointer;
-  color: inherit;
-} */
 
 .header-menu-wrp {
   position: relative;
 }
 
-.menu-button {
+.opened-menu {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background-color: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-width: 200px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  z-index: 50;
+}
+
+#mo-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  border-bottom: 1px solid var(--divider-color);
+  padding-bottom: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+#log {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
-  color: inherit;
-  display: flex;
-  align-items: center;
+  width: 100%;
+  text-align: left;
 }
