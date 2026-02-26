@@ -15,7 +15,7 @@ import {
 import QuoteModal from "../QuoteModal/QuoteModal";
 import { toggleTheme } from "../../store/uiSlice";
 import { clearLibrary } from "../../store/userLibrarySlice";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
@@ -23,10 +23,30 @@ export default function Header() {
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.ui.theme);
   const user = useSelector((state) => state.auth.user);
+  const { role } = useSelector((state) => state.auth);
 
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { role } = useSelector((state) => state.auth);
+
+  const menuRef = useRef(null);
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsMenuOpen(false);
+      }
+    }
+
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
   const handleLogout = async () => {
     // kill the session
     await supabase.auth.signOut();
@@ -76,13 +96,14 @@ export default function Header() {
               {theme === "Sunlight" ? <Moon size={20} /> : <Sun size={20} />}
             </button>
 
-            <div className="header-menu-wrp">
+            <div className="header-menu-wrp" ref={menuRef}>
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="icon-btn"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
+
               {isMenuOpen && (
                 <div className="opened-menu">
                   <div className="mobile-only" id="mo-nav">
@@ -101,6 +122,7 @@ export default function Header() {
                       Contact
                     </Link>
                   </div>
+
                   {role === "admin" && (
                     <Link
                       to="/admin/books"
@@ -111,6 +133,7 @@ export default function Header() {
                       Admin Dashboard
                     </Link>
                   )}
+
                   {user ? (
                     <>
                       <Link
@@ -126,7 +149,6 @@ export default function Header() {
                         <User size={16} /> Profile
                       </Link>
 
-                      {/* REAL LOGOUT BUTTON */}
                       <button
                         onClick={handleLogout}
                         className="nav-link"
