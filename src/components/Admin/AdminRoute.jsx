@@ -8,7 +8,7 @@ export default function AdminRoute({ children }) {
     return <Navigate to="/login" replace />;
   }
 
-  // not admin, send to home
+  // not admin -> send to home
   if (role !== "admin") {
     alert("⛔ Access Denied: This area is for Head Librarians only!");
     return <Navigate to="/" replace />;
