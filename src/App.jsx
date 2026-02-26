@@ -6,6 +6,7 @@ import ContactPage from "./pages/ContactPage";
 import ProfilePage from "./pages/ProfilePage";
 import BookDetailsPage from "./pages/BookDetailsPage";
 import AuthPage from "./pages/AuthPage";
+import AdminDashboard from "./pages/AdminPages/AdminDashboard";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
           <Route path="catalog/:id" element={<BookDetailsPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="profile" element={<ProfilePage />} />
+          <Route path="/admin/books" element={<AdminDashboard />} />
           <Route path="login" element={<AuthPage />} />
           <Route path="signup" element={<AuthPage />} />
         </Route>

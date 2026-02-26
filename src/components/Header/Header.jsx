@@ -23,7 +23,7 @@ export default function Header() {
 
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const { role } = useSelector((state) => state.auth);
   // mock login
   const handleMockLogin = () => {
     dispatch({
@@ -101,6 +101,15 @@ export default function Header() {
                       Contact
                     </Link>
                   </div>
+                  {role === "admin" && (
+                    <Link
+                      to="/admin/books"
+                      className="nav-link"
+                      style={{ color: "#e74c3c" }}
+                    >
+                      Admin Dashboard
+                    </Link>
+                  )}
                   {user ? (
                     <>
                       <Link
