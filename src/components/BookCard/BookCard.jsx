@@ -10,13 +10,13 @@ export default function BookCard({ book, onGuestAction }) {
   const user = useSelector((state) => state.auth.user);
 
   const isFav = useSelector((state) =>
-    state.userLibrary.favorites.includes(book.id),
+    state.userLibrary.favorites.includes(String(book.id)),
   );
   const isWant = useSelector((state) =>
-    state.userLibrary.wantToRead.includes(book.id),
+    state.userLibrary.wantToRead.includes(String(book.id)),
   );
   const isFinished = useSelector((state) =>
-    state.userLibrary.finished.includes(book.id),
+    state.userLibrary.finished.includes(String(book.id)),
   );
 
   const [showMenu, setShowMenu] = useState(false);

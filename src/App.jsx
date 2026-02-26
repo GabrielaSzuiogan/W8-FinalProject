@@ -8,8 +8,19 @@ import BookDetailsPage from "./pages/BookDetailsPage";
 import AuthPage from "./pages/AuthPage";
 import AdminDashboard from "./pages/AdminPages/AdminDashboard";
 import AdminRoute from "./components/Admin/AdminRoute";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchUserLibrary } from "./store/userLibrarySlice";
 
 export default function App() {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.auth.user);
+
+  useEffect(() => {
+    if (user?.id) {
+      dispatch(fetchUserLibrary(user.id));
+    }
+  }, [user, dispatch]);
   return (
     <BrowserRouter>
       <Routes>

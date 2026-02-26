@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import QuoteModal from "../QuoteModal/QuoteModal";
 import { toggleTheme } from "../../store/uiSlice";
+import { clearLibrary } from "../../store/userLibrarySlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -31,7 +32,7 @@ export default function Header() {
     await supabase.auth.signOut();
     // clear redux state
     dispatch({ type: "auth/logoutUser" });
-
+    dispatch(clearLibrary());
     setIsMenuOpen(false);
     navigate("/");
   };
@@ -135,7 +136,6 @@ export default function Header() {
                       </button>
                     </>
                   ) : (
-                    /* REAL LOGIN LINK (Replaces Mock Button) */
                     <Link
                       to="/login"
                       onClick={() => setIsMenuOpen(false)}
