@@ -66,12 +66,12 @@ export default function CatalogPage() {
       </div>
 
       <div className="catalog-controls">
-        <div className="search-wrapper">
+        <div className="catalog-search-wrapper">
           <Search size={20} className="search-icon" />
           <input
             type="text"
             placeholder="Search titles, authors, or descriptions..."
-            className="search-input"
+            className="catalog-search-input"
             value={searchTerm}
             onChange={(e) => {
               setSearchTerm(e.target.value);
@@ -81,7 +81,7 @@ export default function CatalogPage() {
         </div>
 
         <select
-          className="filter-select"
+          className="catalog-filter-select"
           value={categoryFilter}
           onChange={(e) => {
             setCategoryFilter(e.target.value);
