@@ -95,45 +95,57 @@ export default function BookCard({ book, onGuestAction }) {
 
             {/* open menu */}
             {showMenu && (
-              <div className="tome-dropdown-menu">
-                <div className="tome-dropdown-title">Add to list:</div>
-
-                <button
-                  onClick={() => {
-                    dispatch(
-                      updateBookStatus({
-                        bookId: book.id,
-                        status: "want_to_read",
-                      }),
-                    );
+              <>
+                <div
+                  className="tome-dropdown-close"
+                  onClick={(e) => {
+                    e.stopPropagation();
                     setShowMenu(false);
                   }}
-                  className="icon-btn tome-rf"
-                >
-                  <BookOpen size={25} style={{ marginRight: "8px" }} /> Want to
-                  Read
-                </button>
+                  style={{ position: "fixed", inset: 0, zIndex: 90 }}
+                />
 
-                <button
-                  onClick={() => {
-                    dispatch(
-                      updateBookStatus({ bookId: book.id, status: "finished" }),
-                    );
-                    setShowMenu(false);
-                  }}
-                  className="icon-btn tome-rf"
+                <div
+                  className="tome-dropdown-menu"
+                  style={{ position: "absolute", zIndex: 100 }}
                 >
-                  <CheckCircle size={16} style={{ marginRight: "8px" }} />{" "}
-                  Finished!
-                </button>
-              </div>
-            )}
+                  <div className="tome-dropdown-title">Add to list:</div>
 
-            {showMenu && (
-              <div
-                className="tome-dropdown-close"
-                onClick={() => setShowMenu(false)}
-              />
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(
+                        updateBookStatus({
+                          bookId: book.id,
+                          status: "want_to_read",
+                        }),
+                      );
+                      setShowMenu(false);
+                    }}
+                    className="icon-btn tome-rf"
+                  >
+                    <BookOpen size={20} style={{ marginRight: "8px" }} /> Want
+                    to Read
+                  </button>
+
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      dispatch(
+                        updateBookStatus({
+                          bookId: book.id,
+                          status: "finished",
+                        }),
+                      );
+                      setShowMenu(false);
+                    }}
+                    className="icon-btn tome-rf"
+                  >
+                    <CheckCircle size={20} style={{ marginRight: "8px" }} />{" "}
+                    Finished!
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>
