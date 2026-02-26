@@ -104,6 +104,7 @@ export default function Header() {
                     <Link
                       to="/admin/books"
                       className="nav-link"
+                      onClick={() => setIsMenuOpen(false)}
                       style={{ color: "#e74c3c" }}
                     >
                       Admin Dashboard

@@ -14,6 +14,9 @@ export default function AuthProvider({ children }) {
         .select("role")
         .eq("id", user.id)
         .maybeSingle();
+      console.log("Logged in user:", user.email); // Check email
+      console.log("Found profile:", profile); // Check if null
+      console.log("Assigned Role:", profile?.role || "user");
 
       // upd user
       dispatch(
