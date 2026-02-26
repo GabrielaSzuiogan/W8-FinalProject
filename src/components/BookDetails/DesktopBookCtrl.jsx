@@ -1,10 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Heart, BookOpen, CheckCircle } from "lucide-react";
-import {
-  toggleFavorite,
-  addToWantToRead,
-  addToFinished,
-} from "../../store/userLibrarySlice";
+import { toggleFavorite, updateBookStatus } from "../../store/userLibrarySlice";
 
 export default function DesktopBookCtrl({ book, onGuestAction }) {
   const dispatch = useDispatch();
@@ -30,7 +26,13 @@ export default function DesktopBookCtrl({ book, onGuestAction }) {
       <div className="desktop-actions-row">
         <button
           className={`desktop-btn btn-want-read ${isWant ? "active-desktop" : ""}`}
-          onClick={() => handleAction(() => dispatch(addToWantToRead(book.id)))}
+          onClick={() =>
+            handleAction(() =>
+              dispatch(
+                updateBookStatus({ bookId: book.id, status: "want_to_read" }),
+              ),
+            )
+          }
         >
           {isWant ? <CheckCircle size={18} /> : <BookOpen size={18} />}
           {isWant ? "On List" : "Want to Read"}
@@ -38,7 +40,13 @@ export default function DesktopBookCtrl({ book, onGuestAction }) {
 
         <button
           className={`desktop-btn btn-finish ${isFinished ? "active-desktop" : ""}`}
-          onClick={() => handleAction(() => dispatch(addToFinished(book.id)))}
+          onClick={() =>
+            handleAction(() =>
+              dispatch(
+                updateBookStatus({ bookId: book.id, status: "finished" }),
+              ),
+            )
+          }
         >
           <CheckCircle size={18} />
           {isFinished ? "Completed" : "Mark as Finished"}

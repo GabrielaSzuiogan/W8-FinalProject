@@ -1,10 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Heart, BookOpen, CheckCircle } from "lucide-react";
-import {
-  toggleFavorite,
-  addToWantToRead,
-  addToFinished,
-} from "../../store/userLibrarySlice";
+import { toggleFavorite, updateBookStatus } from "../../store/userLibrarySlice";
 
 export default function MobileBookCtrl({ book, onGuestAction }) {
   const dispatch = useDispatch();
@@ -30,7 +26,13 @@ export default function MobileBookCtrl({ book, onGuestAction }) {
       <div className="mobile-actions-grid">
         <button
           className={`mobile-action-item ${isWant ? "active" : ""}`}
-          onClick={() => handleAction(() => dispatch(addToWantToRead(book.id)))}
+          onClick={() =>
+            handleAction(() =>
+              dispatch(
+                updateBookStatus({ bookId: book.id, status: "want_to_read" }),
+              ),
+            )
+          }
         >
           <div className="mobile-action-icon">
             <BookOpen size={20} />
@@ -50,7 +52,13 @@ export default function MobileBookCtrl({ book, onGuestAction }) {
 
         <button
           className={`mobile-action-item ${isFinished ? "active" : ""}`}
-          onClick={() => handleAction(() => dispatch(addToFinished(book.id)))}
+          onClick={() =>
+            handleAction(() =>
+              dispatch(
+                updateBookStatus({ bookId: book.id, status: "finished" }),
+              ),
+            )
+          }
         >
           <div className="mobile-action-icon">
             <CheckCircle size={20} />

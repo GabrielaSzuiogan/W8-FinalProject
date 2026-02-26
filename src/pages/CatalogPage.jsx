@@ -2,12 +2,15 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchTomes } from "../store/librarySlice";
 import { Search, Loader, BookOpen } from "lucide-react";
+
 import BookCard from "../components/BookCard/BookCard.jsx";
 import AuthGateModal from "../components/AuthGateModal/AuthGateModal.jsx";
 import "./CatalogPage.css";
+import { useNavigate } from "react-router-dom";
 
 export default function CatalogPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { tomes, isLoading, error } = useSelector((state) => state.library);
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -142,9 +145,11 @@ export default function CatalogPage() {
         <AuthGateModal
           onClose={() => setShowAuthModal(false)}
           onLogin={() => {
+            navigate("/login");
             setShowAuthModal(false);
           }}
           onRegister={() => {
+            navigate("/signup");
             setShowAuthModal(false);
           }}
         />

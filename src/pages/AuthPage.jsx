@@ -1,7 +1,7 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import { Key } from "lucide-react";
-import LoginForm from "../components/Auth/LoginForm";
-import SignupForm from "../components/Auth/SignupForm";
+import LoginForm from "../components/Auth/LoginForm.jsx";
+import SignupForm from "../components/Auth/SignupForm.jsx";
 import "./AuthPage.css";
 
 export default function AuthPage() {

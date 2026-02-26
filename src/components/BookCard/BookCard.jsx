@@ -2,11 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Heart, Plus, CheckCircle, BookOpen } from "lucide-react";
-import {
-  toggleFavorite,
-  addToWantToRead,
-  addToFinished,
-} from "../../store/userLibrarySlice";
+import { toggleFavorite, updateBookStatus } from "../../store/userLibrarySlice";
 import "./BookCard.css";
 
 export default function BookCard({ book, onGuestAction }) {
@@ -104,7 +100,12 @@ export default function BookCard({ book, onGuestAction }) {
 
                 <button
                   onClick={() => {
-                    dispatch(addToWantToRead(book.id));
+                    dispatch(
+                      updateBookStatus({
+                        bookId: book.id,
+                        status: "want_to_read",
+                      }),
+                    );
                     setShowMenu(false);
                   }}
                   className="icon-btn tome-rf"
@@ -115,7 +116,9 @@ export default function BookCard({ book, onGuestAction }) {
 
                 <button
                   onClick={() => {
-                    dispatch(addToFinished(book.id));
+                    dispatch(
+                      updateBookStatus({ bookId: book.id, status: "finished" }),
+                    );
                     setShowMenu(false);
                   }}
                   className="icon-btn tome-rf"
