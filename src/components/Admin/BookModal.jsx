@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { supabase } from "../../services/supabase";
-import { X, Loader } from "lucide-react";
+import { X, Loader, Upload } from "lucide-react";
 
 export default function BookModal({ bookToEdit, onClose }) {
   const [formData, setFormData] = useState(
@@ -19,12 +19,18 @@ export default function BookModal({ bookToEdit, onClose }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
       let url = formData.coverUrl;
-      // Image Upload Logic (Same as before)
+
       if (imageFile) {
         const fileName = `${Date.now()}.${imageFile.name.split(".").pop()}`;
-        await supabase.storage.from("book-covers").upload(fileName, imageFile);
+        const { error: uploadError } = await supabase.storage
+          .from("book-covers")
+          .upload(fileName, imageFile);
+
+        if (uploadError) throw uploadError;
+
         const { data } = supabase.storage
           .from("book-covers")
           .getPublicUrl(fileName);
@@ -32,14 +38,22 @@ export default function BookModal({ bookToEdit, onClose }) {
       }
 
       const dataToSave = { ...formData, coverUrl: url };
+      delete dataToSave.id;
 
       if (bookToEdit) {
-        await supabase.from("tomes").update(dataToSave).eq("id", bookToEdit.id);
+        const { error } = await supabase
+          .from("tomes")
+          .update(dataToSave)
+          .eq("id", bookToEdit.id);
+        if (error) throw error;
       } else {
-        await supabase.from("tomes").insert([dataToSave]);
+        const { error } = await supabase.from("tomes").insert([dataToSave]);
+        if (error) throw error;
       }
+
       onClose();
     } catch (error) {
+      console.error(error);
       alert("Error: " + error.message);
     } finally {
       setLoading(false);
@@ -53,15 +67,17 @@ export default function BookModal({ bookToEdit, onClose }) {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            marginBottom: "1rem",
+            marginBottom: "1.5rem",
           }}
         >
-          <h2>{bookToEdit ? "Edit Tome" : "New Tome"}</h2>
+          <h2 style={{ margin: 0, color: "#333" }}>
+            {bookToEdit ? "Edit Tome" : "Summon New Tome"}
+          </h2>
           <button
             onClick={onClose}
             style={{ background: "none", border: "none", cursor: "pointer" }}
           >
-            <X />
+            <X color="#666" />
           </button>
         </div>
 
@@ -102,12 +118,15 @@ export default function BookModal({ bookToEdit, onClose }) {
               <option>Fantasy</option>
               <option>Sci-Fi</option>
               <option>Mystery</option>
+              <option>History</option>
+              <option>Grimoire</option>
             </select>
             <input
               type="number"
               className="search-input"
               min="1"
               max="5"
+              placeholder="Rating (1-5)"
               value={formData.sparkleRating}
               onChange={(e) =>
                 setFormData({ ...formData, sparkleRating: e.target.value })
@@ -115,10 +134,42 @@ export default function BookModal({ bookToEdit, onClose }) {
             />
           </div>
 
-          <input
-            type="file"
-            onChange={(e) => setImageFile(e.target.files[0])}
-          />
+          {/* upload cover */}
+          <div
+            style={{
+              border: "1px dashed #ccc",
+              padding: "1rem",
+              borderRadius: "8px",
+              textAlign: "center",
+              background: "#f9f9f9",
+            }}
+          >
+            <label
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                cursor: "pointer",
+                color: "#666",
+              }}
+            >
+              <Upload size={24} style={{ marginBottom: "0.5rem" }} />
+              <span>
+                {imageFile
+                  ? imageFile.name
+                  : formData.coverUrl
+                    ? "Change Cover Image"
+                    : "Upload Cover Image"}
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => setImageFile(e.target.files[0])}
+                style={{ display: "none" }}
+              />
+            </label>
+          </div>
+
           <textarea
             className="search-input"
             rows="3"

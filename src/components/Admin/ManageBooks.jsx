@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { supabase } from "../../services/supabase";
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Edit, Trash2, ImageIcon } from "lucide-react";
 import BookModal from "./BookModal";
 
 export default function ManageBooks() {
@@ -10,21 +10,15 @@ export default function ManageBooks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
 
-  // Fetch
   const fetchBooks = async () => {
-    const { data } = await supabase
-      .from("tomes")
-      .select("*")
-      .order("created_at", { ascending: false });
+    const { data } = await supabase.from("tomes").select("*");
+
     if (data) setBooks(data);
   };
 
   useEffect(() => {
     const fetchBooks = async () => {
-      const { data, error } = await supabase
-        .from("tomes")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const { data, error } = await supabase.from("tomes").select("*");
 
       if (error) {
         console.error("Error fetching books:", error);
@@ -36,7 +30,6 @@ export default function ManageBooks() {
     fetchBooks();
   }, []);
 
-  // Filter Logic
   const filteredBooks = books.filter((book) => {
     const matchesSearch =
       book.title.toLowerCase().includes(filter.toLowerCase()) ||
@@ -46,7 +39,6 @@ export default function ManageBooks() {
     return matchesSearch && matchesCategory;
   });
 
-  // Handlers
   const handleEdit = (book) => {
     setEditingBook(book);
     setIsModalOpen(true);
@@ -61,12 +53,11 @@ export default function ManageBooks() {
   const handleCloseModal = () => {
     setIsModalOpen(false);
     setEditingBook(null);
-    fetchBooks(); // Refresh after add/edit
+    fetchBooks();
   };
 
   return (
     <div>
-      {/* Controls */}
       <div className="dashboard-controls">
         <div className="search-wrapper">
           <input
@@ -90,11 +81,11 @@ export default function ManageBooks() {
         </button>
       </div>
 
-      {/* Table */}
       <div className="table-wrapper">
         <table className="data-table">
           <thead>
             <tr>
+              <th>Cover</th>
               <th>Title</th>
               <th>Author</th>
               <th>Category</th>
@@ -105,23 +96,64 @@ export default function ManageBooks() {
           <tbody>
             {filteredBooks.map((book) => (
               <tr key={book.id}>
-                <td style={{ fontWeight: "bold" }}>{book.title}</td>
-                <td>{book.author}</td>
                 <td>
-                  <span className={`badge ${book.category.toLowerCase()}`}>
+                  {/* cover */}
+                  {book.coverUrl ? (
+                    <img
+                      src={book.coverUrl}
+                      alt="cover"
+                      style={{
+                        width: "40px",
+                        height: "60px",
+                        objectFit: "cover",
+                        borderRadius: "4px",
+                      }}
+                    />
+                  ) : (
+                    <div
+                      style={{
+                        width: "40px",
+                        height: "60px",
+                        background: "#eee",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        borderRadius: "4px",
+                      }}
+                    >
+                      <ImageIcon size={20} color="#aaa" />
+                    </div>
+                  )}
+                </td>
+
+                {/* title */}
+                <td style={{ fontWeight: "bold" }}>{book.title}</td>
+
+                {/* author */}
+                <td>{book.author}</td>
+
+                {/* category */}
+                <td>
+                  <span
+                    className={`badge ${book.category?.toLowerCase() || "fantasy"}`}
+                  >
                     {book.category}
                   </span>
                 </td>
-                <td>{"⭐".repeat(book.sparkleRating || 0)}</td>
+
+                {/* rating */}
+                <td>{"★".repeat(book.sparkleRating || 0)}</td>
+
+                {/* actions */}
                 <td>
                   <button
-                    className="action-btn"
+                    className="action-btn btn-edit"
                     onClick={() => handleEdit(book)}
                   >
                     <Edit size={18} />
                   </button>
                   <button
-                    className="action-btn delete"
+                    className="action-btn btn-delete"
                     onClick={() => handleDelete(book.id)}
                   >
                     <Trash2 size={18} />
@@ -133,7 +165,6 @@ export default function ManageBooks() {
         </table>
       </div>
 
-      {/* Modal */}
       {isModalOpen && (
         <BookModal bookToEdit={editingBook} onClose={handleCloseModal} />
       )}
