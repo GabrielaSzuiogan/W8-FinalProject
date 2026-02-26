@@ -62,7 +62,7 @@ export default function SignupForm() {
     <form onSubmit={handleSubmit} className="auth-form">
       <div className="form-group">
         <label>
-          <User size={16} /> Wizard Name
+          <User size={16} /> Username
         </label>
         <input
           type="text"
@@ -76,7 +76,7 @@ export default function SignupForm() {
 
       <div className="form-group">
         <label>
-          <Mail size={16} /> Email Spell
+          <Mail size={16} /> Email
         </label>
         <input
           type="email"
@@ -90,7 +90,7 @@ export default function SignupForm() {
 
       <div className="form-group">
         <label>
-          <Lock size={16} /> Secret Key
+          <Lock size={16} /> Password
         </label>
         <input
           type="password"

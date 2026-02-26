@@ -59,7 +59,7 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit} className="auth-form">
       <div className="form-group">
         <label>
-          <Mail size={16} /> Email Spell
+          <Mail size={16} /> Email
         </label>
         <input
           type="email"
@@ -73,7 +73,7 @@ export default function LoginForm() {
 
       <div className="form-group">
         <label>
-          <Lock size={16} /> Secret Key
+          <Lock size={16} /> Password
         </label>
         <input
           type="password"

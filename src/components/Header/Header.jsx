@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Header.css";
+import { supabase } from "../../services/supabase";
 import {
   Leaf,
   LogIn,
@@ -17,6 +18,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 export default function Header() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const theme = useSelector((state) => state.ui.theme);
   const user = useSelector((state) => state.auth.user);
@@ -24,17 +26,14 @@ export default function Header() {
   const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { role } = useSelector((state) => state.auth);
-  // mock login
-  const handleMockLogin = () => {
-    dispatch({
-      type: "auth/setUser",
-      payload: { user: { id: "1", name: "Pip" }, role: "sprite" },
-    });
-    setIsMenuOpen(false);
-  };
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    // kill the session
+    await supabase.auth.signOut();
+    // clear redux state
     dispatch({ type: "auth/logoutUser" });
+
     setIsMenuOpen(false);
+    navigate("/");
   };
 
   return (
@@ -124,6 +123,8 @@ export default function Header() {
                       >
                         <User size={16} /> Profile
                       </Link>
+
+                      {/* REAL LOGOUT BUTTON */}
                       <button
                         onClick={handleLogout}
                         className="nav-link"
@@ -133,13 +134,15 @@ export default function Header() {
                       </button>
                     </>
                   ) : (
-                    <button
-                      onClick={handleMockLogin}
+                    /* REAL LOGIN LINK (Replaces Mock Button) */
+                    <Link
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
                       className="nav-link"
                       id="log"
                     >
                       <LogIn size={16} /> Login
-                    </button>
+                    </Link>
                   )}
                 </div>
               )}
