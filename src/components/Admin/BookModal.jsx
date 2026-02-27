@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../services/supabase";
 import { X, Loader, Upload } from "lucide-react";
+import { useSelector } from "react-redux";
 
 export default function BookModal({ bookToEdit, onClose }) {
   const [formData, setFormData] = useState(
@@ -15,6 +16,11 @@ export default function BookModal({ bookToEdit, onClose }) {
   );
   const [loading, setLoading] = useState(false);
   const [imageFile, setImageFile] = useState(null);
+  const { tomes } = useSelector((state) => state.library);
+  const categories = [
+    "All",
+    ...new Set(tomes.map((t) => t.category).filter(Boolean)),
+  ].sort();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -70,7 +76,7 @@ export default function BookModal({ bookToEdit, onClose }) {
             marginBottom: "1.5rem",
           }}
         >
-          <h2 style={{ margin: 0, color: "#333" }}>
+          <h2 style={{ margin: 0, color: "var(--text-main)" }}>
             {bookToEdit ? "Edit Tome" : "Summon New Tome"}
           </h2>
           <button
@@ -115,11 +121,11 @@ export default function BookModal({ bookToEdit, onClose }) {
                 setFormData({ ...formData, category: e.target.value })
               }
             >
-              <option>Fantasy</option>
-              <option>Sci-Fi</option>
-              <option>Mystery</option>
-              <option>History</option>
-              <option>Grimoire</option>
+              {categories.map((cat) => (
+                <option key={cat} value={cat}>
+                  {cat === "All" ? "All Categories" : cat}
+                </option>
+              ))}
             </select>
             <input
               type="number"

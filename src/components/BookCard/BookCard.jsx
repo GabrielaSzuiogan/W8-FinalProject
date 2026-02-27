@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Heart, Plus, CheckCircle, BookOpen } from "lucide-react";
 import { toggleFavorite, updateBookStatus } from "../../store/userLibrarySlice";
 import "./BookCard.css";
+import placeholderImg from "../../assets/book-cover-placeholder.png";
 
 export default function BookCard({ book, onGuestAction }) {
   const dispatch = useDispatch();
@@ -36,11 +37,10 @@ export default function BookCard({ book, onGuestAction }) {
       <div className="tome-cover-container" style={{ position: "relative" }}>
         <Link to={`/catalog/${book.id}`} className="tome-img-link">
           <img
-            src={book.coverUrl}
+            src={book.coverUrl || placeholderImg}
             alt={book.title}
             onError={(e) => {
-              e.target.src =
-                "https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=500&q=80";
+              e.target.src = placeholderImg;
             }}
             className="tome-cover-img"
           />

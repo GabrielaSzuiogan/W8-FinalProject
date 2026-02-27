@@ -7,6 +7,7 @@ import BookCard from "../components/BookCard/BookCard";
 import MobileBookControls from "../components/BookDetails/MobileBookCtrl";
 import DesktopBookControls from "../components/BookDetails/DesktopBookCtrl";
 import "./BookDetailsPage.css";
+import placeholderImg from "../assets/book-cover-placeholder.png";
 
 export default function BookDetailsPage() {
   const { id } = useParams();
@@ -59,12 +60,10 @@ export default function BookDetailsPage() {
         {/* left: cover */}
         <div className="details-cover-wrapper">
           <img
-            src={book.coverUrl}
+            src={book.coverUrl || placeholderImg}
             alt={book.title}
             className="details-cover"
-            onError={(e) =>
-              (e.target.src = "https://via.placeholder.com/300x450")
-            }
+            onError={(e) => (e.target.src = placeholderImg)}
           />
         </div>
 

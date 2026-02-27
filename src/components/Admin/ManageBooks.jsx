@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { supabase } from "../../services/supabase";
 import { Plus, Edit, Trash2, ImageIcon } from "lucide-react";
 import BookModal from "./BookModal";
+import placeholderImg from "../../assets/book-cover-placeholder.png";
+import { useSelector } from "react-redux";
 
 export default function ManageBooks() {
   const [books, setBooks] = useState([]);
@@ -10,6 +12,12 @@ export default function ManageBooks() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState(null);
 
+  const { tomes } = useSelector((state) => state.library);
+
+  const categories = [
+    "All",
+    ...new Set(tomes.map((t) => t.category).filter(Boolean)),
+  ].sort();
   const fetchBooks = async () => {
     const { data } = await supabase.from("tomes").select("*");
 
@@ -70,10 +78,11 @@ export default function ManageBooks() {
             className="filter-select"
             onChange={(e) => setCategoryFilter(e.target.value)}
           >
-            <option value="All">All Categories</option>
-            <option value="Fantasy">Fantasy</option>
-            <option value="Sci-Fi">Sci-Fi</option>
-            <option value="Mystery">Mystery</option>
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat === "All" ? "All Categories" : cat}
+              </option>
+            ))}
           </select>
         </div>
         <button className="btn-add" onClick={() => setIsModalOpen(true)}>
@@ -98,32 +107,18 @@ export default function ManageBooks() {
               <tr key={book.id}>
                 <td>
                   {/* cover */}
-                  {book.coverUrl ? (
-                    <img
-                      src={book.coverUrl}
-                      alt="cover"
-                      style={{
-                        width: "40px",
-                        height: "60px",
-                        objectFit: "cover",
-                        borderRadius: "4px",
-                      }}
-                    />
-                  ) : (
-                    <div
-                      style={{
-                        width: "40px",
-                        height: "60px",
-                        background: "#eee",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        borderRadius: "4px",
-                      }}
-                    >
-                      <ImageIcon size={20} color="#aaa" />
-                    </div>
-                  )}
+
+                  <img
+                    src={book.coverUrl || placeholderImg}
+                    alt="cover"
+                    style={{
+                      width: "40px",
+                      height: "60px",
+                      objectFit: "cover",
+                      borderRadius: "4px",
+                    }}
+                    onError={(e) => (e.target.src = placeholderImg)}
+                  />
                 </td>
 
                 {/* title */}
