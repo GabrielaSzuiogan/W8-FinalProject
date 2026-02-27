@@ -30,6 +30,7 @@
   color: white;
   border: 4px solid var(--bg-color);
   box-shadow: 0 0 0 2px var(--divider-color);
+  flex-shrink: 0;
 }
 
 .profile-info h1 {
@@ -116,4 +117,44 @@
   padding: 4rem 2rem;
   max-width: 500px;
   margin: 4rem auto;
+}
+
+@media (max-width: 768px) {
+  .profile-header {
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.5rem 1rem;
+  }
+
+  .profile-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .profile-stats {
+    justify-content: center;
+    width: 100%;
+    margin-top: 1rem;
+    gap: 1.5rem;
+  }
+
+  .profile-tabs {
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    justify-content: flex-start;
+    padding-bottom: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .profile-tabs::-webkit-scrollbar {
+    display: none;
+  }
+  .profile-tabs {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }

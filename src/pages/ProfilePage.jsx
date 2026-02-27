@@ -49,7 +49,7 @@ export default function ProfilePage() {
     if (activeTab === "finished") targetIds = finished;
     if (activeTab === "favorites") targetIds = favorites;
 
-    return fetchedBooks.filter((book) => targetIds.includes(book.id));
+    return fetchedBooks.filter((book) => targetIds.includes(String(book.id)));
   };
 
   const currentBooks = getBooksForTab();

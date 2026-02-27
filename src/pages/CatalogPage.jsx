@@ -69,6 +69,8 @@ export default function CatalogPage() {
         <div className="catalog-search-wrapper">
           <Search size={20} className="search-icon" />
           <input
+            id="catalog-search"
+            name="catalogSearch"
             type="text"
             placeholder="Search titles, authors, or descriptions..."
             className="catalog-search-input"
@@ -82,6 +84,8 @@ export default function CatalogPage() {
 
         <select
           className="catalog-filter-select"
+          id="catalog-filter"
+          name="catalogFilter"
           value={categoryFilter}
           onChange={(e) => {
             setCategoryFilter(e.target.value);

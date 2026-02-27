@@ -9,9 +9,10 @@ export default function MobileBookCtrl({ book, onGuestAction }) {
   const { favorites, wantToRead, finished } = useSelector(
     (state) => state.userLibrary,
   );
-  const isFav = favorites.includes(book.id);
-  const isWant = wantToRead.includes(book.id);
-  const isFinished = finished.includes(book.id);
+
+  const isFav = favorites.includes(String(book.id));
+  const isWant = wantToRead.includes(String(book.id));
+  const isFinished = finished.includes(String(book.id));
 
   const handleAction = (actionCallback) => {
     if (!user) {
