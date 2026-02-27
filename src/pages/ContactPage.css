@@ -52,7 +52,7 @@
   border-radius: 12px;
   background-color: var(--bg-color);
   color: var(--text-main);
-  font-family: "Inter", sans-serif;
+  font-family: "Nunito", sans-serif;
   font-size: 1rem;
   transition: border-color 0.2s;
   box-sizing: border-box;

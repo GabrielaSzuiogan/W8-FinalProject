@@ -11,6 +11,7 @@ import "./ContactPage.css";
 import { updateContactDraft } from "../store/uiSlice";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { supabase } from "../services/supabase";
 
 export default function ContactPage() {
   const dispatch = useDispatch();
@@ -37,15 +38,30 @@ export default function ContactPage() {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setStatus("sending");
 
-    setTimeout(() => {
+    try {
+      const { error } = await supabase.from("pigeons").insert([
+        {
+          name: formData.name,
+          email: formData.email,
+          tome: formData.tome,
+          message: formData.message,
+        },
+      ]);
+
+      if (error) throw error;
+
       setStatus("success");
       setFormData({ name: "", email: "", tome: "", message: "" });
       dispatch(updateContactDraft(""));
-    }, 1500);
+    } catch (error) {
+      console.error("Pigeon lost in transit:", error);
+      setStatus("idle");
+      alert("Oh no! The pigeon got lost. Please try again.");
+    }
   };
   return (
     <div className="contact-wrp">
