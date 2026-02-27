@@ -3,7 +3,16 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "../../services/supabase";
 import { setUser } from "../../store/authSlice";
-import { User, Mail, Lock, ArrowRight, Loader } from "lucide-react";
+
+import {
+  User,
+  Mail,
+  Lock,
+  ArrowRight,
+  Loader,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import "./AuthForm.css";
 
 export default function SignupForm() {
@@ -17,6 +26,8 @@ export default function SignupForm() {
   });
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -92,14 +103,26 @@ export default function SignupForm() {
         <label>
           <Lock size={16} /> Password
         </label>
-        <input
-          type="password"
-          name="password"
-          placeholder="••••••••"
-          value={formData.password}
-          onChange={handleChange}
-          required
-        />
+
+        <div className="password-wrapper">
+          <input
+            className="form-input"
+            type={showPassword ? "text" : "password"}
+            name="password"
+            placeholder="••••••••"
+            value={formData.password}
+            onChange={handleChange}
+            required
+          />
+          <button
+            type="button"
+            className="password-toggle-btn"
+            onClick={() => setShowPassword(!showPassword)}
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+          </button>
+        </div>
       </div>
 
       {error && <div className="auth-error">{error}</div>}
