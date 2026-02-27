@@ -66,7 +66,7 @@ export default function QuoteModal({ onClose }) {
 
         {isLoading ? (
           <h3 style={{ fontStyle: "italic", animation: "pulse 1.5s infinite" }}>
-            Reading through stars... ✨
+            Reading through stars...
           </h3>
         ) : (
           quoteData && (

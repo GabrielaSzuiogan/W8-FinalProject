@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   user: null, // null -> user is a Visitor
-  role: "visitor", // 'visitor', 'sprite', or 'admin'
+  role: "visitor", // 'visitor', 'user', or 'admin'
 };
 
 const authSlice = createSlice({

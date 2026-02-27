@@ -1,6 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@700&display=swap");
 
-/* Sunlight / Light Mode */
 :root {
   --bg-color: #fdf8eb;
   --header-bg: #e0f8e5;
@@ -21,7 +20,6 @@
   --header-padding: 1rem;
 }
 
-/* Starlight Dark Mode */
 [data-theme="Starlight"] {
   --bg-color: #0b1120;
   --header-bg: #0f162c;

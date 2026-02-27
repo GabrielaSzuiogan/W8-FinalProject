@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-// check localStorage for a saved theme, default to 'Sunlight' if none exists
 const savedTheme = localStorage.getItem("sprite-theme") || "Sunlight";
 
 const initialState = {
