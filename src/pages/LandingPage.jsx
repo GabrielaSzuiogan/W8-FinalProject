@@ -14,7 +14,7 @@ export default function LandingPage() {
             Starwood Sprite Library
           </>
         }
-        description="The quietest place in the enchanted forest. Here, magical creatures can browse ancient tomes, discover new potions, and learn the history of the woodland realm."
+        description="The quietest place in the enchanted forest. Here, you can browse ancient tomes and track your progress."
         buttonText="Browse the Tomes"
         linkTo="/catalog"
       />
